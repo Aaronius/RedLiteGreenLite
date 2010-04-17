@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%"
+		implements="com.aaronhardy.rlgl.view.groupStatus.IGroupStatus">
+	<mx:Script>
+		<![CDATA[
+			import com.aaronhardy.rlgl.enums.Color;
+			
+			[Bindable]
+			protected var statusText:String = 'N/A';
+			
+			[Bindable]
+			protected var statusColor:uint = 0xffffff;
+			
+			[Bindable]
+			protected var lastModifiedAliasText:String = 'N/A';
+			
+			public function set status(value:String):void
+			{
+				switch (value)
+				{
+					case Color.GREEN:
+						statusText = 'Green';
+						statusColor = 0x00ff00;
+						break;
+					case Color.RED:
+						statusText = 'Red';
+						statusColor = 0xff0000;
+						break;
+					default:
+						statusText = 'N/A';
+						statusColor = 0xffffff;
+						break;
+				}
+			}
+			
+			public function set lastModifiedAlias(value:String):void
+			{
+				lastModifiedAliasText = value ? value : 'N/A'
+			}
+			
+			[Bindable]
+			private var _appVersion:String;
+			
+			public function set appVersion(value:String):void
+			{
+				_appVersion = value;
+			}
+		]]>
+	</mx:Script>
+	<mx:HBox width="100%">
+		<mx:Label text="Status:"/>
+		<mx:Label text="{statusText}" 
+				color="{statusColor}" 
+				width="100%" textAlign="right" 
+				minWidth="0" truncateToFit="true"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="Set by:" paddingLeft="0"/>
+		<mx:Label text="{lastModifiedAliasText}" 
+				width="100%" textAlign="right" 
+				minWidth="0" truncateToFit="true"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="Version:"/>
+		<mx:Label text="{_appVersion}" 
+				width="100%" textAlign="right"
+				minWidth="0" truncateToFit="true"/>
+	</mx:HBox>
+</mx:VBox>

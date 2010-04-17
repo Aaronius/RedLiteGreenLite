@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Form xmlns:mx="http://www.adobe.com/2006/mxml"
+		implements="com.aaronhardy.rlgl.view.login.ILogin"
+		defaultButton="{goButton}" verticalGap="5"
+		paddingTop="0" paddingRight="0"
+		paddingBottom="0" paddingLeft="0">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.aaronhardy.rlgl.controller.events.LogInEvent;
+			
+			[Bindable]
+			private var _loggingIn:Boolean;
+			
+			public function set loggingIn(value:Boolean):void
+			{
+				_loggingIn = value;
+			}
+			
+			public function logIn():void
+			{
+				dispatchEvent(new LogInEvent(LogInEvent.LOG_IN,
+						groupInput.text, aliasInput.text));
+			}
+			
+			protected function getGoButtonLabel(_retrievingGroupInfo:Boolean):String
+			{
+				return _retrievingGroupInfo ? "Connecting..." : "Go";
+			}
+			
+			protected function getGoButtonEnabled(aliasInputText:String, 
+					groupInputText:String, retrievingGroupInfo:Boolean):Boolean
+			{
+				return aliasInputText.length > 0 && groupInputText.length > 0 &&
+						!retrievingGroupInfo;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:VBox verticalGap="0" width="100%">
+		<mx:Label text="Alias"/>	
+		<mx:TextInput id="aliasInput" width="100%" restrict="A-Za-z0-9"/>
+	</mx:VBox>
+	<mx:VBox verticalGap="0" width="100%">
+		<mx:Label text="Group"/>	
+		<mx:TextInput id="groupInput" width="100%" restrict="A-Za-z0-9"/>
+	</mx:VBox>
+	<mx:Spacer height="3"/>
+	<mx:Box width="100%" horizontalAlign="right">
+		<mx:Button id="goButton" 
+				label="{getGoButtonLabel(_loggingIn)}" 
+				click="logIn();"
+				enabled="{getGoButtonEnabled(aliasInput.text, groupInput.text, _loggingIn)}"/>
+	</mx:Box>
+</mx:Form>
