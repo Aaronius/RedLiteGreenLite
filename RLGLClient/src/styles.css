@@ -1,0 +1,25 @@
+/* CSS file */
+Application
+{
+	backgroundGradientColors: #4A4A4A, #292929;
+	color: #FFFFFF;
+}
+
+TextInput {
+   borderStyle: solid;
+   borderColor: #ffffff;
+   backgroundColor: #333333;
+   themeColor: #ffffff;
+}
+
+Button {
+   cornerRadius: 2;
+   highlightAlphas: 0, 0;
+   fillAlphas: 1, 1, 1, 1;
+   fillColors: #4A4A4A, #4A4A4A, #292929, #292929;
+   color: #ffffff;
+   textRollOverColor: #ffffff;
+   borderColor: #ffffff;
+   themeColor: #ffffff;
+   fontFamily: Verdana;
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+		creationComplete="consumer.subscribe()">
+	<mx:Script>
+		<![CDATA[
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+			
+			private function send():void{
+				var message:IMessage = new AsyncMessage();
+				message.body.chatMessage = msg.text;
+				producer.send(message);
+				msg.text = "";
+			}
+			private function messageHandler(message:IMessage):void{
+				log.text += message.body.chatMessage + "\n";
+			}
+			
+			private function resultHandler(evt:ResultEvent):void
+			{ 
+				trace(evt.message);
+			}
+
+			private function faultHandler(evt:FaultEvent):void
+			{
+				trace(evt.message);
+			}
+
+		]]>
+	</mx:Script>
+	<mx:RemoteObject id="remoteObject" destination="amfbackend" result="resultHandler(event)" fault="faultHandler(event)" />
+	<mx:Consumer id="consumer" destination="chat" message="messageHandler(event.message)"/>
+	<mx:Producer id="producer" destination="chat" />
+	
+	<mx:Panel title="Chat" width="100%" height="100%">
+		<mx:Button label="Test Remote Object" click="remoteObject.getColorForGroup('mygroup');"/>
+		<mx:TextArea id="log" width="100%" height="100%"/>
+		<mx:ControlBar>
+			<mx:TextInput id="msg" width="100%" enter="send()"/>
+			<mx:Button label="Send B" click="send()"/>
+		</mx:ControlBar>
+	</mx:Panel>
+</mx:Application>

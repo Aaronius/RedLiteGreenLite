@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" 
+		width="270" height="275" 
+		horizontalAlign="center" verticalAlign="middle"
+		showStatusBar="false" title="RedLiteGreenLite"
+		creationComplete="cc();">
+	<mx:Script>
+		<![CDATA[
+			import com.aaronhardy.rlgl.Config;
+			import mx.validators.Validator;
+			import com.aaronhardy.rlgl.Controller;
+			
+			[Bindable]
+			protected var appVersion:String;
+			
+			[Bindable]
+			protected var controller:Controller = new Controller();
+			
+			protected function cc():void
+			{
+				aliasInput.setFocus();
+				controller.checkForUpdates();
+				setApplicationVersion();
+			}
+			
+			private function setApplicationVersion():void {
+	            var appXML:XML = NativeApplication.nativeApplication.applicationDescriptor;
+	            var ns:Namespace = appXML.namespace();
+	            appVersion = appXML.ns::version;
+	        }
+			
+			protected function go():void
+			{
+				controller.init(aliasInput.text, groupInput.text);
+			}
+			
+			protected function getGoButtonLabel(retrievingGroupInfo:Boolean):String
+			{
+				return retrievingGroupInfo ? "Connecting..." : "Go";
+			}
+			
+			protected function getGoButtonEnabled(aliasInputText:String, 
+					groupInputText:String, retrievingGroupInfo:Boolean):Boolean
+			{
+				return aliasInputText.length > 0 && groupInputText.length > 0 &&
+						!retrievingGroupInfo;
+			}
+			
+			protected function getStatusLabel(color:String):String
+			{
+				switch (color)
+				{
+					case Config.GREEN:
+						return 'Green';
+					case Config.RED:
+						return 'Red';
+					default:
+						return 'N/A';
+				}
+			}
+			
+			protected function getStatusColor(color:String):uint
+			{
+				switch (color)
+				{
+					case Config.GREEN:
+						return 0x00ff00;
+					case Config.RED:
+						return 0xff0000;
+					default:
+						return 0xffffff;
+				}
+			}
+			
+			protected function getAliasLabel(alias:String):String
+			{
+				return alias ? alias : 'N/A';
+			}
+		]]>
+	</mx:Script>
+	<mx:Style source="styles.css"/>
+	
+	<mx:VBox width="175" horizontalAlign="center" verticalGap="20">
+		<mx:Form defaultButton="{goButton}" verticalGap="5" width="100%"
+				paddingTop="0" paddingRight="0"
+				paddingBottom="0" paddingLeft="0">
+			<mx:VBox verticalGap="0" width="100%">
+				<mx:Label text="Alias"/>	
+				<mx:TextInput id="aliasInput" width="100%" restrict="A-Za-z0-9"/>
+			</mx:VBox>
+			<mx:VBox verticalGap="0" width="100%">
+				<mx:Label text="Group"/>	
+				<mx:TextInput id="groupInput" width="100%" restrict="A-Za-z0-9"/>
+			</mx:VBox>
+			<mx:Spacer height="3"/>
+			<mx:Box width="100%" horizontalAlign="right">
+				<mx:Button id="goButton" label="{getGoButtonLabel(controller.retrievingGroupInfo)}" 
+						click="go();"
+						enabled="{getGoButtonEnabled(aliasInput.text, groupInput.text, controller.retrievingGroupInfo)}"/>
+			</mx:Box>
+		</mx:Form>
+		<mx:HRule width="100%" strokeWidth="1" strokeColor="#ffffff"/>
+		<mx:VBox width="100%">
+			<mx:HBox width="100%">
+				<mx:Label text="Status:"/>
+				<mx:Label text="{getStatusLabel(controller.color)}" 
+						color="{getStatusColor(controller.color)}" 
+						width="100%" textAlign="right" 
+						minWidth="0" truncateToFit="true"/>
+			</mx:HBox>
+			<mx:HBox width="100%">
+				<mx:Label text="Set by:" paddingLeft="0"/>
+				<mx:Label text="{getAliasLabel(controller.lastModifiedAlias)}" 
+						width="100%" textAlign="right" 
+						minWidth="0" truncateToFit="true"/>
+			</mx:HBox>
+			<mx:HBox width="100%">
+				<mx:Label text="Version:"/>
+				<mx:Label text="{appVersion}" 
+						width="100%" textAlign="right"
+						minWidth="0" truncateToFit="true"/>
+			</mx:HBox>
+		</mx:VBox>
+	</mx:VBox>
+</mx:WindowedApplication>
