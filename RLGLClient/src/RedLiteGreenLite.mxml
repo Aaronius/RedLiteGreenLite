@@ -1,17 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" 
-		width="270" height="275" 
-		horizontalAlign="center" verticalAlign="middle"
-		showStatusBar="false" title="RedLiteGreenLite"
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:mx="library://ns.adobe.com/flex/mx"
 		xmlns:rlgl="com.aaronhardy.rlgl.*" 
 		xmlns:login="com.aaronhardy.rlgl.view.login.*" 
-		xmlns:groupStatus="com.aaronhardy.rlgl.view.groupStatus.*">
+		xmlns:groupStatus="com.aaronhardy.rlgl.view.groupStatus.*"
+		width="270" height="275"
+		showStatusBar="false" title="RedLiteGreenLite"
+		displayStateChanging="displayStateChangingHandler(event);">
+
+	<fx:Style source="styles.css"/>
 	
-	<mx:Style source="styles.css"/>
-	<rlgl:ApplicationContext contextView="{this}"/>
-	<mx:VBox width="175" horizontalAlign="center" verticalGap="20">
+	<fx:Declarations>
+		<rlgl:ApplicationContext id="context" contextView="{this}"/>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.aaronhardy.rlgl.controller.events.LogInEvent;
+			protected function displayStateChangingHandler(event:NativeWindowDisplayStateEvent):void
+			{
+				if (event.afterDisplayState == NativeWindowDisplayState.MINIMIZED)
+				{
+					dock();
+				}
+			}
+			
+			protected function dock():void
+			{
+				nativeWindow.visible = false;
+				nativeApplication.icon.addEventListener(MouseEvent.CLICK, icon_clickHandler);
+			}
+			
+			protected function undock():void
+			{
+				nativeApplication.icon.removeEventListener(MouseEvent.CLICK, icon_clickHandler);
+				nativeWindow.visible = true
+				nativeWindow.orderToFront();
+			}
+			
+			protected function icon_clickHandler(event:MouseEvent):void
+			{
+				undock();
+			}
+		]]>
+	</fx:Script>
+	
+	<s:VGroup width="175" horizontalCenter="0" verticalCenter="0">
 		<login:Login width="100%"/>
 		<mx:HRule width="100%" strokeWidth="1" strokeColor="#ffffff"/>
 		<groupStatus:GroupStatus width="100%"/>
-	</mx:VBox>
-</mx:WindowedApplication>
+	</s:VGroup>
+</s:WindowedApplication>

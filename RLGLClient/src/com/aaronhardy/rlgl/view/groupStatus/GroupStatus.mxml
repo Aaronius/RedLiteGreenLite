@@ -6,32 +6,15 @@
 			import com.aaronhardy.rlgl.enums.Color;
 			
 			[Bindable]
-			protected var statusText:String = 'N/A';
-			
-			[Bindable]
-			protected var statusColor:uint = 0xffffff;
-			
-			[Bindable]
-			protected var lastModifiedAliasText:String = 'N/A';
+			protected var _status:String;
 			
 			public function set status(value:String):void
 			{
-				switch (value)
-				{
-					case Color.GREEN:
-						statusText = 'Green';
-						statusColor = 0x00ff00;
-						break;
-					case Color.RED:
-						statusText = 'Red';
-						statusColor = 0xff0000;
-						break;
-					default:
-						statusText = 'N/A';
-						statusColor = 0xffffff;
-						break;
-				}
+				_status = value;
 			}
+			
+			[Bindable]
+			protected var lastModifiedAliasText:String = 'N/A';
 			
 			public function set lastModifiedAlias(value:String):void
 			{
@@ -39,7 +22,7 @@
 			}
 			
 			[Bindable]
-			private var _appVersion:String;
+			protected var _appVersion:String;
 			
 			public function set appVersion(value:String):void
 			{
@@ -49,8 +32,8 @@
 	</mx:Script>
 	<mx:HBox width="100%">
 		<mx:Label text="Status:"/>
-		<mx:Label text="{statusText}" 
-				color="{statusColor}" 
+		<mx:Label text="{Color.getLabel(_status)}" 
+				color="{Color.getUint(_status)}" 
 				width="100%" textAlign="right" 
 				minWidth="0" truncateToFit="true"/>
 	</mx:HBox>

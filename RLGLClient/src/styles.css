@@ -1,18 +1,20 @@
 /* CSS file */
-Application
+@namespace fx "library://ns.adobe.com/flex/spark";
+
+fx|WindowedApplication,
+fx|Window
 {
-	backgroundGradientColors: #4A4A4A, #292929;
+	backgroundColor: #000000;
 	color: #FFFFFF;
 }
 
-TextInput {
+fx|TextInput {
    borderStyle: solid;
    borderColor: #ffffff;
-   backgroundColor: #333333;
-   themeColor: #ffffff;
+   content-background-color: #333333;
 }
 
-Button {
+fx|Button {
    cornerRadius: 2;
    highlightAlphas: 0, 0;
    fillAlphas: 1, 1, 1, 1;
@@ -20,6 +22,5 @@ Button {
    color: #ffffff;
    textRollOverColor: #ffffff;
    borderColor: #ffffff;
-   themeColor: #ffffff;
-   fontFamily: Verdana;
+   fontamily: Verdana;
 }

@@ -5,10 +5,12 @@ package com.aaronhardy.rlgl
 	import com.aaronhardy.rlgl.controller.CmdHandleGroupState;
 	import com.aaronhardy.rlgl.controller.CmdLogIn;
 	import com.aaronhardy.rlgl.controller.CmdSetGroupState;
+	import com.aaronhardy.rlgl.controller.CmdShowToast;
 	import com.aaronhardy.rlgl.controller.events.GetGroupStateEvent;
 	import com.aaronhardy.rlgl.controller.events.HandleGroupStateEvent;
 	import com.aaronhardy.rlgl.controller.events.LogInEvent;
 	import com.aaronhardy.rlgl.controller.events.SetGroupStateEvent;
+	import com.aaronhardy.rlgl.controller.events.ShowToastEvent;
 	import com.aaronhardy.rlgl.model.Config;
 	import com.aaronhardy.rlgl.model.GroupModel;
 	import com.aaronhardy.rlgl.model.MenuModel;
@@ -42,11 +44,13 @@ package com.aaronhardy.rlgl
 			commandMap.mapEvent(GetGroupStateEvent.GET_STATE, CmdGetGroupState, GetGroupStateEvent);
 			commandMap.mapEvent(HandleGroupStateEvent.HANDLE_GROUP_STATE, CmdHandleGroupState, HandleGroupStateEvent);
 			commandMap.mapEvent(SetGroupStateEvent.SET_GROUP_STATE, CmdSetGroupState, SetGroupStateEvent);
+			commandMap.mapEvent(ShowToastEvent.SHOW_TOAST, CmdShowToast, ShowToastEvent);
 			
 			mediatorMap.mapView(GroupStatus, GroupStatusMediator, IGroupStatus);
 			mediatorMap.mapView(Login, LoginMediator, ILogin);
 			
 			super.startup();
+			//dispatchEvent(new LogInEvent(LogInEvent.LOG_IN, 'testgroup', 'Aaronius'));
 		}
 			
 	}

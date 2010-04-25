@@ -2,6 +2,7 @@ package com.aaronhardy.rlgl.controller
 {
 	import com.aaronhardy.rlgl.controller.events.HandleGroupStateEvent;
 	import com.aaronhardy.rlgl.controller.events.SetGroupStateEvent;
+	import com.aaronhardy.rlgl.controller.events.ShowToastEvent;
 	import com.aaronhardy.rlgl.enums.Color;
 	import com.aaronhardy.rlgl.model.GroupModel;
 	import com.aaronhardy.rlgl.model.MenuModel;
@@ -15,8 +16,11 @@ package com.aaronhardy.rlgl.controller
 	import flash.events.Event;
 	
 	import mx.core.Application;
+	import mx.core.FlexGlobals;
 	
 	import org.robotlegs.mvcs.Command;
+	
+	import spark.components.WindowedApplication;
 
 	public class CmdHandleGroupState extends Command
 	{
@@ -65,11 +69,13 @@ package com.aaronhardy.rlgl.controller
 			groupModel.lastModifiedAlias = event.lastModifiedAlias;
 			updateIcon(event.color, event.lastModifiedAlias);
 			updateMenu(event.color);
+			dispatch(new ShowToastEvent(ShowToastEvent.SHOW_TOAST));
 		}
 		
 		protected function updateIcon(color:String, lastModifiedAlias:String):void
 		{
-			var icon:InteractiveIcon = Application.application.nativeApplication.icon;
+			var app:WindowedApplication = WindowedApplication(FlexGlobals.topLevelApplication);
+			var icon:InteractiveIcon = app.nativeApplication.icon;
 			switch (color)
 			{
 				case Color.GREEN:
@@ -148,7 +154,9 @@ package com.aaronhardy.rlgl.controller
 			exitMenuItem.addEventListener(Event.SELECT, exitFunction);
 			menu.addItem(exitMenuItem);
 			
-			Application.application.nativeApplication.icon.menu = menu;
+			var app:WindowedApplication = WindowedApplication(FlexGlobals.topLevelApplication);
+			var icon:Object = app.nativeApplication.icon;
+			icon.menu = menu;
 			
 			menuModel.menu = menu;
 			menuModel.toggleStatusMenuItem = toggleStatusMenuItem;

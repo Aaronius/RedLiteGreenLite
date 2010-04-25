@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Window xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx" 
+		width="300" height="75" showStatusBar="false"
+		type="lightweight" systemChrome="none" transparent="true"
+		alwaysInFront="true" initialize="startTransition();">
+	<fx:Script>
+		<![CDATA[
+			import com.aaronhardy.rlgl.enums.Color;
+			
+			import mx.effects.Tween;
+			import mx.events.TweenEvent;
+			
+			[Bindable]
+			public var lastModifiedAlias:String;
+			
+			[Bindable]
+			public var color:String;
+			
+			protected function startTransition():void
+			{
+				var screenBounds:Rectangle = Screen.mainScreen.visibleBounds;
+				nativeWindow.x = screenBounds.x + screenBounds.width - width;
+				
+				var stableY:Number = screenBounds.y + screenBounds.height - height;
+				moveInPath.valueFrom = stableY + height / 2;
+				moveInPath.valueTo = stableY;
+				moveOutPath.valueFrom = stableY;
+				moveOutPath.valueTo = stableY - height / 2;
+				moveSequence.play();
+			}
+			
+			public function get nativeWindowY():Number
+			{
+				return nativeWindow.y;
+			}
+			
+			public function set nativeWindowY(value:Number):void
+			{
+				nativeWindow.y = value;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:Sequence id="moveSequence">
+			<s:Animate duration="300" target="{this}">
+				<s:SimpleMotionPath id="moveInPath" property="nativeWindowY"/>
+				<s:SimpleMotionPath property="alpha" valueFrom="0" valueTo="1"/>
+			</s:Animate>
+			<s:Pause duration="3000"/>
+			<s:Animate duration="300" target="{this}">
+				<s:SimpleMotionPath id="moveOutPath" property="nativeWindowY"/>
+				<s:SimpleMotionPath property="alpha" valueFrom="1" valueTo="0"/>
+			</s:Animate>
+		</s:Sequence>
+	</fx:Declarations>
+	<s:layout>
+		<s:VerticalLayout paddingTop="10" paddingRight="10" paddingBottom="10" paddingLeft="10"/>
+	</s:layout>
+	<s:Label width="100%" text="RedLiteGreenLite"/>
+	<s:Label width="100%" text="{lastModifiedAlias} set the lite {Color.getLabel(color)}."/>
+</s:Window>
