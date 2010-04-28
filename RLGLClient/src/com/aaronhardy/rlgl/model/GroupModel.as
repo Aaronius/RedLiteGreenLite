@@ -93,5 +93,8 @@ package com.aaronhardy.rlgl.model
 				}
 			}
 		}
+		
+		public var loggingInGroup:String;
+		public var loggingInAlias:String;
 	}
 }

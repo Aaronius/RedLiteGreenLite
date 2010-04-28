@@ -29,8 +29,8 @@ package com.aaronhardy.rlgl.controller
 			// What happens if the get-group-state call fails?  We're stuck with group
 			// on the model even though we're not really logged into the group.
 			groupMessagingService.initialize(event.group);
-			groupModel.group = event.group;
-			groupModel.alias = event.alias;
+			groupModel.loggingInGroup = event.group;
+			groupModel.loggingInAlias = event.alias;
 		}
 	}
 }

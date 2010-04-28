@@ -45,6 +45,10 @@ package com.aaronhardy.rlgl.service.groupRemoting
 		protected function resultHandler(event:ResultEvent):void
 		{
 			groupModel.loggingIn = false;
+			groupModel.group = groupModel.loggingInGroup;
+			groupModel.alias = groupModel.loggingInAlias;
+			groupModel.loggingInGroup = null;
+			groupModel.loggingInAlias;
 			var color:String = String(event.message.body.color);
 			var lastModifiedAlias:String = String(event.message.body.lastModifiedAlias);
 			dispatch(new HandleGroupStateEvent(

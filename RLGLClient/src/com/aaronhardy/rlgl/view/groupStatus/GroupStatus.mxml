@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%"
-		implements="com.aaronhardy.rlgl.view.groupStatus.IGroupStatus">
+		implements="com.aaronhardy.rlgl.view.groupStatus.IGroupStatus"
+		includeInLayout="{_status != null}"
+		visible="{_status != null}">
 	<mx:Script>
 		<![CDATA[
+			import com.aaronhardy.rlgl.controller.events.SetGroupStateEvent;
 			import com.aaronhardy.rlgl.enums.Color;
+			
+			[Bindable]
+			protected var _group:String;
+			
+			public function set group(value:String):void
+			{
+				_group = value;
+			}
+			
+			[Bindable]
+			protected var _alias:String;
+			
+			public function set alias(value:String):void
+			{
+				_alias = value;
+			}	
 			
 			[Bindable]
 			protected var _status:String;
@@ -14,11 +33,11 @@
 			}
 			
 			[Bindable]
-			protected var lastModifiedAliasText:String = 'N/A';
+			protected var _lastModifiedAlias:String;
 			
 			public function set lastModifiedAlias(value:String):void
 			{
-				lastModifiedAliasText = value ? value : 'N/A'
+				_lastModifiedAlias = value;
 			}
 			
 			[Bindable]
@@ -28,8 +47,41 @@
 			{
 				_appVersion = value;
 			}
+			
+			protected function getToggleButtonLabel(status:String):String
+			{
+				var label:String = 'Go ';
+				label += status == Color.GREEN ?
+						Color.getLabel(Color.RED) : Color.getLabel(Color.GREEN);
+				label += '!';
+				return label;
+			}
+			
+			protected function toggleStatus():void
+			{
+				var newStatus:String = _status == Color.GREEN ? Color.RED : Color.GREEN;
+				dispatchEvent(new SetGroupStateEvent(SetGroupStateEvent.SET_GROUP_STATE,
+					_group, _alias, newStatus));
+			}
+			
+			protected function labelSanitizer(value:String):String
+			{
+				return value ? value : 'N/A';
+			}
 		]]>
 	</mx:Script>
+	<mx:HBox width="100%">
+		<mx:Label text="Alias:"/>
+		<mx:Label text="{labelSanitizer(_alias)}" 
+				  width="100%" textAlign="right" 
+				  minWidth="0" truncateToFit="true"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="Group:"/>
+		<mx:Label text="{labelSanitizer(_group)}" 
+				  width="100%" textAlign="right" 
+				  minWidth="0" truncateToFit="true"/>
+	</mx:HBox>
 	<mx:HBox width="100%">
 		<mx:Label text="Status:"/>
 		<mx:Label text="{Color.getLabel(_status)}" 
@@ -39,7 +91,7 @@
 	</mx:HBox>
 	<mx:HBox width="100%">
 		<mx:Label text="Set by:" paddingLeft="0"/>
-		<mx:Label text="{lastModifiedAliasText}" 
+		<mx:Label text="{labelSanitizer(_lastModifiedAlias)}" 
 				width="100%" textAlign="right" 
 				minWidth="0" truncateToFit="true"/>
 	</mx:HBox>
@@ -49,4 +101,7 @@
 				width="100%" textAlign="right"
 				minWidth="0" truncateToFit="true"/>
 	</mx:HBox>
+	<mx:Button width="100%" height="30"
+			label="{getToggleButtonLabel(_status)}"
+			click="toggleStatus();"/>
 </mx:VBox>
