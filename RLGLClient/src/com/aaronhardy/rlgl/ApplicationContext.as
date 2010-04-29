@@ -6,11 +6,16 @@ package com.aaronhardy.rlgl
 	import com.aaronhardy.rlgl.controller.CmdLogIn;
 	import com.aaronhardy.rlgl.controller.CmdSetGroupState;
 	import com.aaronhardy.rlgl.controller.CmdShowToast;
+	import com.aaronhardy.rlgl.controller.CmdStartup;
+	import com.aaronhardy.rlgl.controller.CmdUpdateIcon;
+	import com.aaronhardy.rlgl.controller.events.CheckForUpdateEvent;
 	import com.aaronhardy.rlgl.controller.events.GetGroupStateEvent;
 	import com.aaronhardy.rlgl.controller.events.HandleGroupStateEvent;
 	import com.aaronhardy.rlgl.controller.events.LogInEvent;
 	import com.aaronhardy.rlgl.controller.events.SetGroupStateEvent;
 	import com.aaronhardy.rlgl.controller.events.ShowToastEvent;
+	import com.aaronhardy.rlgl.controller.events.StartupEvent;
+	import com.aaronhardy.rlgl.controller.events.UpdateIconEvent;
 	import com.aaronhardy.rlgl.model.Config;
 	import com.aaronhardy.rlgl.model.GroupModel;
 	import com.aaronhardy.rlgl.model.MenuModel;
@@ -31,26 +36,27 @@ package com.aaronhardy.rlgl
 	{
 		override public function startup():void
 		{
-			var checkForUpdate:CmdCheckForUpdate = new CmdCheckForUpdate();
-			checkForUpdate.execute();
-			
 			injector.mapSingleton(Config);
 			injector.mapSingleton(GroupModel);
 			injector.mapSingleton(MenuModel);
 			injector.mapSingletonOf(IGroupRemotingService, GroupRemotingService);
 			injector.mapSingletonOf(IGroupMessagingService, GroupMessagingService);
 			
+			commandMap.mapEvent(StartupEvent.STARTUP, CmdStartup, StartupEvent);
+			commandMap.mapEvent(CheckForUpdateEvent.CHECK_FOR_UPDATE, CmdCheckForUpdate, CheckForUpdateEvent);
 			commandMap.mapEvent(LogInEvent.LOG_IN, CmdLogIn, LogInEvent);
 			commandMap.mapEvent(GetGroupStateEvent.GET_STATE, CmdGetGroupState, GetGroupStateEvent);
 			commandMap.mapEvent(HandleGroupStateEvent.HANDLE_GROUP_STATE, CmdHandleGroupState, HandleGroupStateEvent);
 			commandMap.mapEvent(SetGroupStateEvent.SET_GROUP_STATE, CmdSetGroupState, SetGroupStateEvent);
 			commandMap.mapEvent(ShowToastEvent.SHOW_TOAST, CmdShowToast, ShowToastEvent);
+			commandMap.mapEvent(UpdateIconEvent.UPDATE_ICON, CmdUpdateIcon, UpdateIconEvent);
 			
 			mediatorMap.mapView(GroupStatus, GroupStatusMediator, IGroupStatus);
 			mediatorMap.mapView(Login, LoginMediator, ILogin);
 			
 			super.startup();
-			//dispatchEvent(new LogInEvent(LogInEvent.LOG_IN, 'testgroup', 'Aaronius'));
+			
+			dispatchEvent(new StartupEvent(StartupEvent.STARTUP));
 		}
 			
 	}

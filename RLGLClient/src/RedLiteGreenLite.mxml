@@ -35,7 +35,8 @@
 			protected function undock():void
 			{
 				nativeApplication.icon.removeEventListener(MouseEvent.CLICK, icon_clickHandler);
-				nativeWindow.visible = true
+				nativeWindow.visible = true;
+				nativeWindow.restore();
 				nativeWindow.orderToFront();
 			}
 			
