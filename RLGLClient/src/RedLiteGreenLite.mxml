@@ -7,7 +7,8 @@
 		xmlns:groupStatus="com.aaronhardy.rlgl.view.groupStatus.*"
 		width="270" height="350"
 		showStatusBar="false" title="RedLiteGreenLite"
-		displayStateChanging="displayStateChangingHandler(event);">
+		displayStateChanging="displayStateChangingHandler(event);"
+		skinClass="com.aaronhardy.rlgl.view.skin.WindowSkin">
 
 	<fx:Style source="styles.css"/>
 	
