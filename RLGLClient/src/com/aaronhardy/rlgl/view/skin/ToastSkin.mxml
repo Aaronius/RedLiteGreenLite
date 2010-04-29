@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx">
+	<fx:Declarations>
+		<fx:Number id="bgCornerRadius">10</fx:Number>
+	</fx:Declarations>
+	
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("com.aaronhardy.rlgl.view.toast.Toast")]
+	</fx:Metadata>
+	
+	<!-- states -->
+	<s:states>
+		<s:State name="disabledAndInactive" />
+		<s:State name="normalAndInactive" />
+		<s:State name="disabled" />
+		<s:State name="normal" />
+	</s:states>
+	
+	<!-- SkinParts
+	name=statusText, type=spark.components.supportClasses.TextBase, required=false
+	name=statusBar, type=mx.core.IVisualElement, required=false
+	name=titleBar, type=spark.components.windowClasses.TitleBar, required=false
+	name=gripper, type=spark.components.Button, required=false
+	name=contentGroup, type=spark.components.Group, required=false
+	-->
+	
+	<s:Rect top="0" right="0" bottom="0" left="0"
+			topLeftRadiusX="{bgCornerRadius}"
+			topLeftRadiusY="{bgCornerRadius}"
+			bottomLeftRadiusX="{bgCornerRadius}"
+			bottomLeftRadiusY="{bgCornerRadius}">
+		<s:fill>
+			<s:SolidColor color="0x000000"/>
+		</s:fill>
+	</s:Rect>
+	
+	<s:Group id="contentGroup" top="0" right="0" bottom="0" left="0"/>
+</s:Skin>

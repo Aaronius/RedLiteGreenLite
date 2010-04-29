@@ -4,7 +4,8 @@
 		xmlns:mx="library://ns.adobe.com/flex/mx" 
 		width="300" height="75" showStatusBar="false"
 		type="lightweight" systemChrome="none" transparent="true"
-		alwaysInFront="true" initialize="startTransition();">
+		alwaysInFront="true" initialize="startTransition();"
+		skinClass="com.aaronhardy.rlgl.view.skin.ToastSkin">
 	<fx:Script>
 		<![CDATA[
 			import com.aaronhardy.rlgl.enums.Color;
@@ -23,7 +24,8 @@
 				var screenBounds:Rectangle = Screen.mainScreen.visibleBounds;
 				nativeWindow.x = screenBounds.x + screenBounds.width - width;
 				
-				var stableY:Number = screenBounds.y + screenBounds.height - height;
+				// -20 to provide a little gap between the toast and the bottom of the screen
+				var stableY:Number = screenBounds.y + screenBounds.height - height - 20;
 				moveInPath.valueFrom = stableY + height / 2;
 				moveInPath.valueTo = stableY;
 				moveOutPath.valueFrom = stableY;

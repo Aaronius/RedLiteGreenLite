@@ -48,9 +48,8 @@
 		]]>
 	</fx:Script>
 	
-	<s:VGroup width="185" horizontalCenter="0" verticalCenter="0" gap="15">
-		<login:Login width="100%"/>
-		<mx:HRule width="100%" strokeWidth="1" strokeColor="#ffffff"/>
-		<groupStatus:GroupStatus width="100%"/>
+	<s:VGroup width="100%" height="100%" horizontalCenter="0" verticalCenter="0" gap="15" horizontalAlign="center">
+		<login:Login width="185"/>
+		<groupStatus:GroupStatus id="groupStatus" width="100%" height="100%"/>
 	</s:VGroup>
 </s:WindowedApplication>

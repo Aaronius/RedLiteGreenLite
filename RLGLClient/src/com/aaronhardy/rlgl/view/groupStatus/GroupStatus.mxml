@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%"
-		implements="com.aaronhardy.rlgl.view.groupStatus.IGroupStatus"
-		includeInLayout="{_status != null}"
-		visible="{_status != null}">
-	<mx:Script>
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%"
+		 implements="com.aaronhardy.rlgl.view.groupStatus.IGroupStatus"
+		 skinClass="com.aaronhardy.rlgl.view.skin.GroupStatusSkin"
+		 backgroundColor="0x000000" backgroundAlpha=".2">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
 		<![CDATA[
 			import com.aaronhardy.rlgl.controller.events.SetGroupStateEvent;
 			import com.aaronhardy.rlgl.enums.Color;
@@ -52,7 +57,7 @@
 			{
 				var label:String = 'Go ';
 				label += status == Color.GREEN ?
-						Color.getLabel(Color.RED) : Color.getLabel(Color.GREEN);
+					Color.getLabel(Color.RED) : Color.getLabel(Color.GREEN);
 				label += '!';
 				return label;
 			}
@@ -69,39 +74,42 @@
 				return value ? value : 'N/A';
 			}
 		]]>
-	</mx:Script>
-	<mx:HBox width="100%">
-		<mx:Label text="Alias:"/>
-		<mx:Label text="{labelSanitizer(_alias)}" 
-				  width="100%" textAlign="right" 
-				  minWidth="0" truncateToFit="true"/>
-	</mx:HBox>
-	<mx:HBox width="100%">
-		<mx:Label text="Group:"/>
-		<mx:Label text="{labelSanitizer(_group)}" 
-				  width="100%" textAlign="right" 
-				  minWidth="0" truncateToFit="true"/>
-	</mx:HBox>
-	<mx:HBox width="100%">
-		<mx:Label text="Status:"/>
-		<mx:Label text="{Color.getLabel(_status)}" 
-				color="{Color.getUint(_status)}" 
-				width="100%" textAlign="right" 
-				minWidth="0" truncateToFit="true"/>
-	</mx:HBox>
-	<mx:HBox width="100%">
-		<mx:Label text="Set by:" paddingLeft="0"/>
-		<mx:Label text="{labelSanitizer(_lastModifiedAlias)}" 
-				width="100%" textAlign="right" 
-				minWidth="0" truncateToFit="true"/>
-	</mx:HBox>
-	<mx:HBox width="100%">
-		<mx:Label text="Version:"/>
-		<mx:Label text="{_appVersion}" 
-				width="100%" textAlign="right"
-				minWidth="0" truncateToFit="true"/>
-	</mx:HBox>
-	<mx:Button width="100%" height="30"
-			label="{getToggleButtonLabel(_status)}"
-			click="toggleStatus();"/>
-</mx:VBox>
+	</fx:Script>
+	
+	<s:VGroup width="185" height="100%" horizontalCenter="0" top="25" gap="10">
+		<s:HGroup width="100%">
+			<s:Label text="Alias"/>
+			<s:Label text="{labelSanitizer(_alias)}" 
+					width="100%" textAlign="right" 
+					maxDisplayedLines="1"/>
+		</s:HGroup>
+		<s:HGroup width="100%">
+			<s:Label text="Group:"/>
+			<s:Label text="{labelSanitizer(_group)}" 
+					width="100%" textAlign="right" 
+					maxDisplayedLines="1"/>
+		</s:HGroup>
+		<s:HGroup width="100%">
+			<s:Label text="Status:"/>
+			<s:Label text="{Color.getLabel(_status)}" 
+					color="{Color.getUint(_status)}" 
+					width="100%" textAlign="right" 
+					maxDisplayedLines="1"/>
+		</s:HGroup>
+		<s:HGroup width="100%">
+			<s:Label text="Set by:" paddingLeft="0"/>
+			<s:Label text="{labelSanitizer(_lastModifiedAlias)}" 
+					width="100%" textAlign="right" 
+					maxDisplayedLines="1"/>
+		</s:HGroup>
+		<s:HGroup width="100%">
+			<s:Label text="Version:"/>
+			<s:Label text="{_appVersion}" 
+					width="100%" textAlign="right"
+					maxDisplayedLines="1"/>
+		</s:HGroup>
+		<s:Button width="100%" height="30"
+				label="{getToggleButtonLabel(_status)}"
+				click="toggleStatus();"/>
+	</s:VGroup>
+</s:SkinnableContainer>

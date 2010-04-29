@@ -1,20 +1,21 @@
 /* CSS file */
-@namespace fx "library://ns.adobe.com/flex/spark";
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace "com.aaronhardy.rlgl.view.groupStatus.*";
 
-fx|WindowedApplication,
-fx|Window
+s|WindowedApplication,
+s|Window
 {
 	backgroundColor: #000000;
 	color: #FFFFFF;
 }
 
-fx|TextInput {
+s|TextInput {
    borderStyle: solid;
    borderColor: #ffffff;
    content-background-color: #333333;
 }
 
-fx|Button {
+s|Button {
    cornerRadius: 2;
    highlightAlphas: 0, 0;
    fillAlphas: 1, 1, 1, 1;

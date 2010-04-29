@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Form xmlns:mx="http://www.adobe.com/2006/mxml"
 		implements="com.aaronhardy.rlgl.view.login.ILogin"
-		defaultButton="{goButton}" verticalGap="8"
-		paddingTop="0" paddingRight="0"
-		paddingBottom="0" paddingLeft="0" xmlns:s="library://ns.adobe.com/flex/spark">
+		defaultButton="{goButton}"
+		paddingTop="20" paddingRight="0"
+		paddingBottom="10" paddingLeft="0"
+		xmlns:s="library://ns.adobe.com/flex/spark">
 	
 	<mx:Script>
 		<![CDATA[
@@ -36,19 +37,20 @@
 			}
 		]]>
 	</mx:Script>
-	
-	<s:VGroup gap="6" width="100%">
-		<s:Label text="Alias"/>
-		<s:TextInput id="aliasInput" width="100%" restrict="A-Za-z0-9"/>
-	</s:VGroup>
-	<s:VGroup gap="6" width="100%">
-		<s:Label text="Group"/>	
-		<s:TextInput id="groupInput" width="100%" restrict="A-Za-z0-9"/>
-	</s:VGroup>
-	<s:VGroup horizontalAlign="right" width="100%">
-		<s:Button id="goButton" 
-				label="{getGoButtonLabel(_loggingIn)}" 
-				click="logIn();"
-				enabled="{getGoButtonEnabled(aliasInput.text, groupInput.text, _loggingIn)}"/>
+	<s:VGroup verticalAlign="middle" width="100%" height="100%" gap="10">
+		<s:VGroup gap="6" width="100%">
+			<s:Label text="Alias"/>
+			<s:TextInput id="aliasInput" width="100%" restrict="A-Za-z0-9"/>
+		</s:VGroup>
+		<s:VGroup gap="6" width="100%">
+			<s:Label text="Group"/>	
+			<s:TextInput id="groupInput" width="100%" restrict="A-Za-z0-9"/>
+		</s:VGroup>
+		<s:VGroup horizontalAlign="right" width="100%">
+			<s:Button id="goButton" 
+					label="{getGoButtonLabel(_loggingIn)}" 
+					click="logIn();"
+					enabled="{getGoButtonEnabled(aliasInput.text, groupInput.text, _loggingIn)}"/>
+		</s:VGroup>
 	</s:VGroup>
 </mx:Form>

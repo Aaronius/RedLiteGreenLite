@@ -57,7 +57,7 @@
             <!--- @private -->
             <s:RadialGradient y="0">
 				<s:entries>
-					<s:GradientEntry color="#999999"/>
+					<s:GradientEntry color="#787878"/>
 					<s:GradientEntry color="#212121"/>
 				</s:entries>
 			</s:RadialGradient>
