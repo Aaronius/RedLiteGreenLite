@@ -51,6 +51,7 @@
 		</s:fill>
 	</s:Rect>-->
 	
+	<!-- Refactor. -->
     <s:Rect id="backgroundRect" horizontalCenter="0" top="-60"
 			width="{height * 2}" height="{height * 2}">
         <s:fill>

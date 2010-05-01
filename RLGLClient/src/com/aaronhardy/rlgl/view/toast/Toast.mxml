@@ -2,7 +2,7 @@
 <s:Window xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		xmlns:s="library://ns.adobe.com/flex/spark" 
 		xmlns:mx="library://ns.adobe.com/flex/mx" 
-		width="300" height="75" showStatusBar="false"
+		width="225" height="75" showStatusBar="false"
 		type="lightweight" systemChrome="none" transparent="true"
 		alwaysInFront="true" initialize="startTransition();"
 		skinClass="com.aaronhardy.rlgl.view.skin.ToastSkin">
@@ -12,6 +12,12 @@
 			
 			import mx.effects.Tween;
 			import mx.events.TweenEvent;
+			
+			[Embed('assets/green48.png')]
+			protected var GreenIcon48:Class;
+			
+			[Embed('assets/red48.png')]
+			protected var RedIcon48:Class;
 			
 			[Bindable]
 			public var lastModifiedAlias:String;
@@ -42,8 +48,21 @@
 			{
 				nativeWindow.y = value;
 			}
+			
+			protected function getIcon(status:String):Class
+			{
+				switch (status)
+				{
+					case Color.GREEN:
+						return GreenIcon48;
+					case Color.RED:
+					default:
+						return RedIcon48;
+				}
+			}
 		]]>
 	</fx:Script>
+	
 	<fx:Declarations>
 		<s:Sequence id="moveSequence">
 			<s:Animate duration="300" target="{this}">
@@ -57,9 +76,22 @@
 			</s:Animate>
 		</s:Sequence>
 	</fx:Declarations>
+	
 	<s:layout>
-		<s:VerticalLayout paddingTop="10" paddingRight="10" paddingBottom="10" paddingLeft="10"/>
+		<s:HorizontalLayout paddingTop="10" paddingRight="10" 
+				paddingBottom="10" paddingLeft="10" 
+				verticalAlign="middle"/>
 	</s:layout>
-	<s:Label width="100%" text="RedLiteGreenLite"/>
-	<s:Label width="100%" text="{lastModifiedAlias} set the lite {Color.getLabel(color)}."/>
+
+	<mx:Image source="{getIcon(color)}"/>
+	
+	<s:VGroup gap="0">
+		<s:Label width="100%" 
+				text="{Color.getLabel(color)}"
+				fontSize="30"/>
+		<s:Label width="100%" 
+				text="Set by {lastModifiedAlias}"
+				fontSize="9"
+				maxDisplayedLines="1"/>
+	</s:VGroup>
 </s:Window>

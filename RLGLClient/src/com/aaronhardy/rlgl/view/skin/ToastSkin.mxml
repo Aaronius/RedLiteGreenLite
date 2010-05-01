@@ -2,10 +2,6 @@
 <s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		xmlns:s="library://ns.adobe.com/flex/spark" 
 		xmlns:mx="library://ns.adobe.com/flex/mx">
-	<fx:Declarations>
-		<fx:Number id="bgCornerRadius">10</fx:Number>
-	</fx:Declarations>
-	
 	<!-- host component -->
 	<fx:Metadata>
 		[HostComponent("com.aaronhardy.rlgl.view.toast.Toast")]
@@ -28,12 +24,17 @@
 	-->
 	
 	<s:Rect top="0" right="0" bottom="0" left="0"
-			topLeftRadiusX="{bgCornerRadius}"
-			topLeftRadiusY="{bgCornerRadius}"
-			bottomLeftRadiusX="{bgCornerRadius}"
-			bottomLeftRadiusY="{bgCornerRadius}">
+			topLeftRadiusX="{height / 2}"
+			topLeftRadiusY="{height / 2}"
+			bottomLeftRadiusX="{height / 2}"
+			bottomLeftRadiusY="{height / 2}">
 		<s:fill>
-			<s:SolidColor color="0x000000"/>
+			<s:LinearGradient rotation="90">
+				<s:entries>
+					<s:GradientEntry color="#363636" ratio=".2"/>
+					<s:GradientEntry color="#212121"/>
+				</s:entries>
+			</s:LinearGradient>
 		</s:fill>
 	</s:Rect>
 	

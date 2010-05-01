@@ -2,11 +2,22 @@
 @namespace s "library://ns.adobe.com/flex/spark";
 @namespace "com.aaronhardy.rlgl.view.groupStatus.*";
 
+@font-face {
+	src: url("/assets/verdana.ttf");
+	fontFamily: Verdana;
+}
+
 s|WindowedApplication,
 s|Window
 {
-	backgroundColor: #000000;
-	color: #FFFFFF;
+	backgroundColor: #212121;
+	color: #EEEEEE;
+	chromeColor: #4C4C4C;
+	symbolColor: #FFFFFF;
+	rolloverColor: #666666;
+	selectionColor: #999999;
+	focusColor: #EEEEEE;
+	fontFamily: Verdana;
 }
 
 s|TextInput {
@@ -15,13 +26,9 @@ s|TextInput {
    content-background-color: #333333;
 }
 
-s|Button {
-   cornerRadius: 2;
-   highlightAlphas: 0, 0;
-   fillAlphas: 1, 1, 1, 1;
-   fillColors: #4A4A4A, #4A4A4A, #292929, #292929;
-   color: #ffffff;
-   textRollOverColor: #ffffff;
-   borderColor: #ffffff;
-   fontamily: Verdana;
+/** When a button is "emphasized" (when it's the form's default button) it normally uses 
+    DefaultButtonSkin which applies some blue accent to it.  I don't really care about giving it 
+    an emphasized look because right now we only have one button in the [login] form. **/
+s|Button.emphasized {
+	skinClass: ClassReference("spark.skins.spark.ButtonSkin");
 }
