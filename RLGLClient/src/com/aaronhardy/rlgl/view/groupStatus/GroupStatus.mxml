@@ -62,18 +62,6 @@
 				return label;
 			}
 			
-			protected function getToggleButtonChrome(status:String):uint
-			{
-				switch (status)
-				{
-					case Color.GREEN:
-						return 0xB90000;
-					case Color.RED:
-					default:
-						return 0x00B900;
-				}
-			}
-			
 			protected function toggleStatus():void
 			{
 				var newStatus:String = _status == Color.GREEN ? Color.RED : Color.GREEN;
@@ -126,7 +114,6 @@
 		</s:Line>
 		<s:Button width="100%" height="25"
 				label="{getToggleButtonLabel(_status)}"
-				chromeColor="{getToggleButtonChrome(_status)}"
 				visible="{_status != null}"
 				click="toggleStatus();"/>
 	</s:VGroup>

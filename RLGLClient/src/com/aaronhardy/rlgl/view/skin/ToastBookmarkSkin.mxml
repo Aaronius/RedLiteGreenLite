@@ -4,7 +4,7 @@
 		xmlns:mx="library://ns.adobe.com/flex/mx">
 	<!-- host component -->
 	<fx:Metadata>
-		[HostComponent("com.aaronhardy.rlgl.view.toast.Toast")]
+		[HostComponent("spark.components.SkinnableContainer")]
 	</fx:Metadata>
 	
 	<!-- states -->
@@ -27,7 +27,7 @@
 			topLeftRadiusX="{height / 2}"
 			topLeftRadiusY="{height / 2}"
 			bottomLeftRadiusX="{height / 2}"
-			bottomLeftRadiusY="{height / 2}">
+			bottomLeftRadiusY="{height / 2}" alpha=".75">
 		<s:fill>
 			<s:LinearGradient rotation="90">
 				<s:entries>

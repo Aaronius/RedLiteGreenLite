@@ -2,10 +2,12 @@
 <s:Window xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		xmlns:s="library://ns.adobe.com/flex/spark" 
 		xmlns:mx="library://ns.adobe.com/flex/mx" 
-		width="225" height="75" showStatusBar="false"
+		width="225" showStatusBar="false"
 		type="lightweight" systemChrome="none" transparent="true"
-		alwaysInFront="true" initialize="startTransition();"
-		skinClass="com.aaronhardy.rlgl.view.skin.ToastSkin">
+		backgroundAlpha="0"
+		alwaysInFront="true"
+		initialize="initPosition();"
+		creationComplete="{slide.play()}">
 	<fx:Script>
 		<![CDATA[
 			import com.aaronhardy.rlgl.enums.Color;
@@ -25,28 +27,11 @@
 			[Bindable]
 			public var color:String;
 			
-			protected function startTransition():void
+			protected function initPosition():void
 			{
 				var screenBounds:Rectangle = Screen.mainScreen.visibleBounds;
 				nativeWindow.x = screenBounds.x + screenBounds.width - width;
-				
-				// -20 to provide a little gap between the toast and the bottom of the screen
-				var stableY:Number = screenBounds.y + screenBounds.height - height - 20;
-				moveInPath.valueFrom = stableY + height / 2;
-				moveInPath.valueTo = stableY;
-				moveOutPath.valueFrom = stableY;
-				moveOutPath.valueTo = stableY - height / 2;
-				moveSequence.play();
-			}
-			
-			public function get nativeWindowY():Number
-			{
-				return nativeWindow.y;
-			}
-			
-			public function set nativeWindowY(value:Number):void
-			{
-				nativeWindow.y = value;
+				nativeWindow.y = screenBounds.y + screenBounds.height - height - 20;
 			}
 			
 			protected function getIcon(status:String):Class
@@ -64,34 +49,38 @@
 	</fx:Script>
 	
 	<fx:Declarations>
-		<s:Sequence id="moveSequence">
-			<s:Animate duration="300" target="{this}">
-				<s:SimpleMotionPath id="moveInPath" property="nativeWindowY"/>
-				<s:SimpleMotionPath property="alpha" valueFrom="0" valueTo="1"/>
-			</s:Animate>
+		<s:Power id="easeIn" easeInFraction="1"/>
+		<s:Power id="easeOut" easeInFraction="0"/>
+		<s:Sequence id="slide">
+			<s:Move target="{bookmark}" duration="400" xFrom="{width}" xTo="0" easer="{easeIn}"/>
 			<s:Pause duration="3000"/>
-			<s:Animate duration="300" target="{this}">
-				<s:SimpleMotionPath id="moveOutPath" property="nativeWindowY"/>
-				<s:SimpleMotionPath property="alpha" valueFrom="1" valueTo="0"/>
-			</s:Animate>
+			<s:Move target="{bookmark}" duration="400" xTo="{width}" easer="{easeOut}"/>
 		</s:Sequence>
 	</fx:Declarations>
 	
-	<s:layout>
-		<s:HorizontalLayout paddingTop="10" paddingRight="10" 
-				paddingBottom="10" paddingLeft="10" 
-				verticalAlign="middle"/>
-	</s:layout>
+	<!-- 
+	We can't use 100% width here because that would take the x position into account
+	which is not what we want.
+	-->
+	<s:SkinnableContainer id="bookmark" width="{width}"
+			skinClass="com.aaronhardy.rlgl.view.skin.ToastBookmarkSkin">
+		<s:layout>
+			<s:HorizontalLayout paddingTop="10" paddingRight="10" 
+					paddingBottom="10" paddingLeft="10" 
+					verticalAlign="middle"/>
+		</s:layout>
 
-	<mx:Image source="{getIcon(color)}"/>
-	
-	<s:VGroup gap="0">
-		<s:Label width="100%" 
-				text="{Color.getLabel(color)}"
-				fontSize="30"/>
-		<s:Label width="100%" 
-				text="Set by {lastModifiedAlias}"
-				fontSize="9"
-				maxDisplayedLines="1"/>
-	</s:VGroup>
+		<mx:Image source="{getIcon(color)}"/>
+		
+		<s:VGroup gap="0" width="100%">
+			<s:Label width="100%" 
+					text="{Color.getLabel(color)}"
+					fontSize="30"/>
+			<s:Label width="100%" 
+					text="set by {lastModifiedAlias}"
+					fontSize="9"
+					maxDisplayedLines="1"/>
+		</s:VGroup>
+	</s:SkinnableContainer>
+
 </s:Window>
