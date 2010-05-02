@@ -13,6 +13,7 @@
 			import com.aaronhardy.rlgl.enums.Color;
 			
 			import mx.effects.Tween;
+			import mx.events.EffectEvent;
 			import mx.events.TweenEvent;
 			
 			[Embed('assets/green48.png')]
@@ -45,13 +46,19 @@
 						return RedIcon48;
 				}
 			}
+
+			protected function slide_effectEndHandler(event:EffectEvent):void
+			{
+				nativeWindow.close();
+			}
+
 		]]>
 	</fx:Script>
 	
 	<fx:Declarations>
 		<s:Power id="easeIn" easeInFraction="1"/>
 		<s:Power id="easeOut" easeInFraction="0"/>
-		<s:Sequence id="slide">
+		<s:Sequence id="slide" effectEnd="slide_effectEndHandler(event)">
 			<s:Move target="{bookmark}" duration="400" xFrom="{width}" xTo="0" easer="{easeIn}"/>
 			<s:Pause duration="3000"/>
 			<s:Move target="{bookmark}" duration="400" xTo="{width}" easer="{easeOut}"/>
