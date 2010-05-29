@@ -1,6 +1,7 @@
 package com.aaronhardy.rlgl.controller
 {
 	import com.aaronhardy.rlgl.controller.events.CheckForUpdateEvent;
+	import com.aaronhardy.rlgl.controller.events.LogInEvent;
 	import com.aaronhardy.rlgl.controller.events.UpdateIconEvent;
 	import com.aaronhardy.rlgl.enums.Color;
 	
@@ -12,6 +13,7 @@ package com.aaronhardy.rlgl.controller
 		{
 			dispatch(new CheckForUpdateEvent(CheckForUpdateEvent.CHECK_FOR_UPDATE));
 			dispatch(new UpdateIconEvent(UpdateIconEvent.UPDATE_ICON, Color.BLACK, null, false));
+			//dispatch(new LogInEvent(LogInEvent.LOG_IN, 'testgroup', 'Aaronius'));
 		}
 	}
 }

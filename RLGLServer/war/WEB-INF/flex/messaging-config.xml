@@ -9,7 +9,9 @@
     </adapters>
 
     <default-channels>
+        <channel ref="my-amf-stream"/>
         <channel ref="my-polling-amf"/>
+        <channel ref="my-amf-longpoll"/>
     </default-channels>
 
 	<destination id="litepost">

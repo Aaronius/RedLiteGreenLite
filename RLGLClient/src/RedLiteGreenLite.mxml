@@ -13,6 +13,7 @@
 	<fx:Style source="styles.css"/>
 	
 	<fx:Declarations>
+		<!--<mx:TraceTarget level="2"/>-->
 		<rlgl:ApplicationContext id="context" contextView="{this}"/>
 	</fx:Declarations>
 	
